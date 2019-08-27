@@ -23,7 +23,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Xml.Serialization;
 
-#if !KeePassUAP
+#if !KeePassUAP && !KeePassLite
 using System.Windows.Forms;
 #endif
 
@@ -69,7 +69,7 @@ namespace KeePassLib.Translation
 			return dict;
 		}
 
-#if (!KeePassLibSD && !KeePassUAP)
+#if (!KeePassLibSD && !KeePassUAP && !KeePassLite)
 		public void ApplyTo(ToolStripItemCollection tsic)
 		{
 			if(tsic == null) throw new ArgumentNullException("tsic");
@@ -98,5 +98,5 @@ namespace KeePassLib.Translation
 			}
 		}
 #endif
-	}
+   }
 }

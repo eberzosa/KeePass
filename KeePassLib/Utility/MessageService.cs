@@ -23,7 +23,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Text;
 
-#if !KeePassUAP
+#if !KeePassUAP && !KeePassLite
 using System.Windows.Forms;
 #endif
 
@@ -32,7 +32,8 @@ using KeePassLib.Serialization;
 
 namespace KeePassLib.Utility
 {
-	public sealed class MessageServiceEventArgs : EventArgs
+#if !KeePassLite
+   public sealed class MessageServiceEventArgs : EventArgs
 	{
 		private string m_strTitle = string.Empty;
 		private string m_strText = string.Empty;
@@ -55,13 +56,15 @@ namespace KeePassLib.Utility
 			m_msgIcon = msgIcon;
 		}
 	}
+#endif
 
 	public static class MessageService
 	{
 		private static volatile uint m_uCurrentMessageCount = 0;
 
+#if !KeePassLite
 #if !KeePassLibSD
-		private const MessageBoxIcon m_mbiInfo = MessageBoxIcon.Information;
+      private const MessageBoxIcon m_mbiInfo = MessageBoxIcon.Information;
 		private const MessageBoxIcon m_mbiWarning = MessageBoxIcon.Warning;
 		private const MessageBoxIcon m_mbiFatal = MessageBoxIcon.Error;
 
@@ -73,6 +76,7 @@ namespace KeePassLib.Utility
 		private const MessageBoxIcon m_mbiFatal = MessageBoxIcon.Hand;
 #endif
 		private const MessageBoxIcon m_mbiQuestion = MessageBoxIcon.Question;
+#endif
 
 		public static string NewLine
 		{
@@ -97,7 +101,7 @@ namespace KeePassLib.Utility
 			get { return m_uCurrentMessageCount; }
 		}
 
-#if !KeePassUAP
+#if !KeePassUAP && !KeePassLite
 		public static event EventHandler<MessageServiceEventArgs> MessageShowing;
 #endif
 
@@ -163,7 +167,7 @@ namespace KeePassLib.Utility
 			return sbText.ToString();
 		}
 
-#if (!KeePassLibSD && !KeePassUAP)
+#if (!KeePassLibSD && !KeePassUAP && !KeePassLite)
 		internal static Form GetTopForm()
 		{
 			FormCollection fc = Application.OpenForms;
@@ -173,7 +177,7 @@ namespace KeePassLib.Utility
 		}
 #endif
 
-#if !KeePassUAP
+#if !KeePassUAP && !KeePassLite
 		internal static DialogResult SafeShowMessageBox(string strText, string strTitle,
 			MessageBoxButtons mb, MessageBoxIcon mi, MessageBoxDefaultButton mdb)
 		{

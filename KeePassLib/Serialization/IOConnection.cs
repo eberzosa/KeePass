@@ -419,7 +419,7 @@ namespace KeePassLib.Serialization
 
 					return (prx != null);
 				}
-#if KeePassUAP
+#if KeePassUAP || KeePassLite
 				catch(Exception) { Debug.Assert(false); }
 #else
 				catch(Exception ex)

@@ -37,8 +37,10 @@ namespace KeePassLib
 		private readonly PwUuid m_pwUuid;
 		private readonly byte[] m_pbImageDataPng;
 
+#if !KeePassLite
 		private readonly Image m_imgOrg;
 		private Dictionary<long, Image> m_dImageCache = new Dictionary<long, Image>();
+#endif
 
 		// Recommended maximum sizes, not obligatory
 		internal const int MaxWidth = 128;
@@ -54,7 +56,8 @@ namespace KeePassLib
 			get { return m_pbImageDataPng; }
 		}
 
-		[Obsolete("Use GetImage instead.")]
+#if !KeePassLite
+      [Obsolete("Use GetImage instead.")]
 		public Image Image
 		{
 #if (!KeePassLibSD && !KeePassUAP)
@@ -63,6 +66,7 @@ namespace KeePassLib
 			get { return GetImage(); } // Backward compatibility
 #endif
 		}
+#endif
 
 		public PwCustomIcon(PwUuid pwUuid, byte[] pbImageDataPng)
 		{
@@ -76,6 +80,7 @@ namespace KeePassLib
 			m_pwUuid = pwUuid;
 			m_pbImageDataPng = pbImageDataPng;
 
+#if !KeePassLite
 			// MemoryStream ms = new MemoryStream(m_pbImageDataPng, false);
 			// m_imgOrg = Image.FromStream(ms);
 			// ms.Close();
@@ -85,13 +90,15 @@ namespace KeePassLib
 			if(m_imgOrg != null)
 				m_dImageCache[GetID(m_imgOrg.Width, m_imgOrg.Height)] =
 					m_imgOrg;
-		}
+#endif
+      }
 
-		private static long GetID(int w, int h)
+      private static long GetID(int w, int h)
 		{
 			return (((long)w << 32) ^ (long)h);
 		}
 
+#if !KeePassLite
 		/// <summary>
 		/// Get the icon as an <c>Image</c> (original size).
 		/// </summary>
@@ -121,6 +128,7 @@ namespace KeePassLib
 			m_dImageCache[lID] = img;
 			return img;
 		}
+#endif
 #endif
 	}
 }

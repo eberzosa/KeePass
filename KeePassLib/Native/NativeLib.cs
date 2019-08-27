@@ -28,7 +28,9 @@ using System.Text.RegularExpressions;
 #if !KeePassUAP
 using System.IO;
 using System.Threading;
+#if !KeePassLite
 using System.Windows.Forms;
+#endif
 #endif
 
 using KeePassLib.Utility;
@@ -139,7 +141,7 @@ namespace KeePassLib.Native
 			m_platID = Environment.OSVersion.Platform;
 #endif
 
-#if (!KeePassLibSD && !KeePassUAP)
+#if (!KeePassLibSD && !KeePassUAP && !KeePassLite)
 			// Mono returns PlatformID.Unix on Mac OS X, workaround this
 			if(m_platID.Value == PlatformID.Unix)
 			{
@@ -149,7 +151,7 @@ namespace KeePassLib.Native
 			}
 #endif
 
-			return m_platID.Value;
+         return m_platID.Value;
 		}
 
 		private static DesktopType? m_tDesktop = null;
@@ -202,7 +204,7 @@ namespace KeePassLib.Native
 			return m_tDesktop.Value;
 		}
 
-#if (!KeePassLibSD && !KeePassUAP)
+#if (!KeePassLibSD && !KeePassUAP && !KeePassLite)
 		public static string RunConsoleApp(string strAppPath, string strParams)
 		{
 			return RunConsoleApp(strAppPath, strParams, null);
@@ -354,14 +356,14 @@ namespace KeePassLib.Native
 		}
 #endif
 
-		/// <summary>
-		/// Transform a key.
-		/// </summary>
-		/// <param name="pBuf256">Source and destination buffer.</param>
-		/// <param name="pKey256">Key to use in the transformation.</param>
-		/// <param name="uRounds">Number of transformation rounds.</param>
-		/// <returns>Returns <c>true</c>, if the key was transformed successfully.</returns>
-		public static bool TransformKey256(byte[] pBuf256, byte[] pKey256,
+      /// <summary>
+      /// Transform a key.
+      /// </summary>
+      /// <param name="pBuf256">Source and destination buffer.</param>
+      /// <param name="pKey256">Key to use in the transformation.</param>
+      /// <param name="uRounds">Number of transformation rounds.</param>
+      /// <returns>Returns <c>true</c>, if the key was transformed successfully.</returns>
+      public static bool TransformKey256(byte[] pBuf256, byte[] pKey256,
 			ulong uRounds)
 		{
 #if KeePassUAP

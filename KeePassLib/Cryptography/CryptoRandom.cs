@@ -27,7 +27,9 @@ using System.IO;
 #if !KeePassUAP
 using System.Drawing;
 using System.Security.Cryptography;
+#if !KeePassLite
 using System.Windows.Forms;
+#endif
 #endif
 
 using KeePassLib.Delegates;
@@ -188,7 +190,7 @@ namespace KeePassLib.Cryptography
 			fI32(Environment.TickCount);
 			fI64(DateTime.UtcNow.ToBinary());
 
-#if !KeePassLibSD
+#if !KeePassLibSD && !KeePassLite
 			// In try-catch for systems without GUI;
 			// https://sourceforge.net/p/keepass/discussion/329221/thread/20335b73/
 			try
@@ -200,8 +202,8 @@ namespace KeePassLib.Cryptography
 			catch(Exception) { Debug.Assert(NativeLib.IsUnix()); }
 #endif
 
-			try
-			{
+         try
+         {
 				fI32((int)NativeLib.GetPlatformID());
 #if KeePassUAP
 				fStr(EnvironmentExt.OSVersion.VersionString);

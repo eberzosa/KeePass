@@ -31,7 +31,7 @@ using System.Text;
 using System.Threading;
 using System.Xml;
 
-#if !KeePassUAP
+#if !KeePassUAP && !KeePassLite
 using System.Windows.Forms;
 #endif
 
@@ -251,7 +251,7 @@ namespace KeePassLib.Utility
 		{
 			try
 			{
-#if !KeePassUAP
+#if !KeePassUAP && !KeePassLite
 				const int msDelay = 250;
 
 				string strTest = ClipboardU.GetText();
@@ -293,7 +293,7 @@ namespace KeePassLib.Utility
 			finally { g_thFixClip = null; }
 		}
 
-#if !KeePassUAP
+#if !KeePassUAP && !KeePassLite
 		private static bool NeedClipboardWorkaround()
 		{
 			try

@@ -23,7 +23,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-#if !KeePassUAP
+#if !KeePassUAP && !KeePassLite
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -33,8 +33,9 @@ namespace KeePassLib.Utility
 {
 	public static class GfxUtil
 	{
+#if !KeePassLite
 #if (!KeePassLibSD && !KeePassUAP)
-		private sealed class GfxImage
+      private sealed class GfxImage
 		{
 			public byte[] Data;
 
@@ -437,5 +438,6 @@ namespace KeePassLib.Utility
 
 			return StrUtil.DataToDataUri(pb, "image/png");
 		}
-	}
+#endif
+   }
 }

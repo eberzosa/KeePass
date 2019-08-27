@@ -1,0 +1,33 @@
+<Project>
+
+  <!-- Settings -->
+  <PropertyGroup>
+    <VersionPrefix>2.41.1</VersionPrefix>
+  </PropertyGroup>
+
+  <!-- Project Settings -->
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)..\eberzosagh.snk</AssemblyOriginatorKeyFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- Packing -->
+  <PropertyGroup>
+    <Authors>Enrique Berzosa</Authors>
+    <Copyright>© 2003-2019 Dominik Reichl, $([System.DateTime]::Now.Year) Enrique Berzosa</Copyright>
+    <Description>KeePass Password Management Library</Description>
+    <RepositoryUrl>https://github.com/eberzosa/AutoMoq</RepositoryUrl>
+    <PackageTags>keepass security</PackageTags>
+    <PackageLicenseExpression>GPL-2.0-only</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+  </PropertyGroup>
+
+  <!-- CI Helpers -->
+  <PropertyGroup>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)..\..\packages</PackageOutputPath>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+  
+</Project>

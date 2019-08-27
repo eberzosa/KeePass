@@ -1,0 +1,7 @@
+<Project>
+
+  <PropertyGroup>
+    <PackageId>EBerzosa.$(Product)</PackageId>
+  </PropertyGroup>
+  
+</Project>

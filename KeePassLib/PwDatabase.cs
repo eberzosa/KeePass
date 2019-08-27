@@ -1648,7 +1648,7 @@ namespace KeePassLib
 
 			return null;
 		}
-#elif !KeePassLibSD
+#elif !KeePassLibSD && !KeePassLite
 		[Obsolete("Additionally specify the size.")]
 		public Image GetCustomIcon(PwUuid pwIconId)
 		{

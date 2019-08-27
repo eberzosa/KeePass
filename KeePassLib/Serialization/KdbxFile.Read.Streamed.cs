@@ -234,8 +234,10 @@ namespace KeePassLib.Serialization
 					else if(xr.Name == ElemDbColor)
 					{
 						string strColor = ReadString(xr);
+#if !NETSTANDARD
 						if(!string.IsNullOrEmpty(strColor))
 							m_pwDatabase.Color = ColorTranslator.FromHtml(strColor);
+#endif
 					}
 					else if(xr.Name == ElemDbKeyChanged)
 						m_pwDatabase.MasterKeyChanged = ReadTime(xr);
@@ -431,14 +433,19 @@ namespace KeePassLib.Serialization
 					else if(xr.Name == ElemFgColor)
 					{
 						string strColor = ReadString(xr);
+#if !NETSTANDARD
 						if(!string.IsNullOrEmpty(strColor))
 							m_ctxEntry.ForegroundColor = ColorTranslator.FromHtml(strColor);
-					}
-					else if(xr.Name == ElemBgColor)
+#endif
+
+               }
+               else if(xr.Name == ElemBgColor)
 					{
 						string strColor = ReadString(xr);
+#if !NETSTANDARD
 						if(!string.IsNullOrEmpty(strColor))
 							m_ctxEntry.BackgroundColor = ColorTranslator.FromHtml(strColor);
+#endif
 					}
 					else if(xr.Name == ElemOverrideUrl)
 						m_ctxEntry.OverrideUrl = ReadString(xr);

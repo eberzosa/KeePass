@@ -26,7 +26,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-#if !KeePassUAP
+#if !KeePassUAP && !KeePassLite
 using System.Drawing;
 using System.Windows.Forms;
 #endif
@@ -174,7 +174,7 @@ namespace KeePassLib.Translation
 			return new Dictionary<string, string>();
 		}
 
-#if (!KeePassLibSD && !KeePassUAP)
+#if (!KeePassLibSD && !KeePassUAP && !KeePassLite)
 		public void ApplyTo(Form form)
 		{
 			if(form == null) throw new ArgumentNullException("form");

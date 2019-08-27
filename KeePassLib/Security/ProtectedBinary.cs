@@ -87,7 +87,7 @@ namespace KeePassLib.Security
 		{
 			get
 			{
-#if KeePassLibSD
+#if KeePassLibSD || NETSTANDARD
 				return false;
 #else
 				bool? ob = g_obProtectedMemorySupported;
@@ -268,13 +268,15 @@ namespace KeePassLib.Security
 				return;
 			}
 
-			if(ProtectedBinary.ProtectedMemorySupported)
+#if !NETSTANDARD
+         if(ProtectedBinary.ProtectedMemorySupported)
 			{
 				ProtectedMemory.Protect(m_pbData, MemoryProtectionScope.SameProcess);
 
 				m_mp = PbMemProt.ProtectedMemory;
 				return;
 			}
+#endif
 
 			byte[] pbKey32 = g_pbKey32;
 			if(pbKey32 == null)
@@ -298,9 +300,12 @@ namespace KeePassLib.Security
 		{
 			if(m_pbData.Length == 0) return;
 
-			if(m_mp == PbMemProt.ProtectedMemory)
+#if !NETSTANDARD
+         if(m_mp == PbMemProt.ProtectedMemory)
 				ProtectedMemory.Unprotect(m_pbData, MemoryProtectionScope.SameProcess);
-			else if(m_mp == PbMemProt.ChaCha20)
+			else 
+#endif
+         if (m_mp == PbMemProt.ChaCha20)
 			{
 				byte[] pbIV = new byte[12];
 				MemUtil.UInt64ToBytesEx((ulong)m_lID, pbIV, 4);
